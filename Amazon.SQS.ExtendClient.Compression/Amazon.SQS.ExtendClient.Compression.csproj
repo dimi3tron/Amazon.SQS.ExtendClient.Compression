@@ -14,6 +14,8 @@
     <PackageProjectUrl>https://github.com/dimi3tron/Amazon.SQS.ExtendClient.Compression</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dimi3tron/Amazon.SQS.ExtendClient.Compression</RepositoryUrl>
     <PackageTags>aws sqs compression queue gzip amazon</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>AWSSQS.ExtendClient.Compression</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
