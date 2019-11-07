@@ -6,7 +6,9 @@ It automatically compresses and decompresses any message sent or retrieved throu
 
 ## Installation
 
-Nuget comming soon
+```PowerShell
+Install-Package AWSSQS.ExtendClient.Compression
+```
 
 ## Usage
 
