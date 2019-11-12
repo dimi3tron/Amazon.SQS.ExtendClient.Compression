@@ -1,20 +1,21 @@
-using ICSharpCode.SharpZipLib.GZip;
-using System.IO;
+﻿using System.IO;
 using System.Text;
+using ICSharpCode.SharpZipLib.GZip;
 
 namespace Amazon.SQS.ExtendClient.Compression
 {
-    internal static class StringExtensions
+    /// <inheritdoc cref="ICompressionProvider"/>
+    public class CompressionProvider : ICompressionProvider
     {
-        public static byte[] Compress(this string me)
+        public byte[] Compress(string message)
         {
-            if (me == null) return null;
+            if (message == null) return null;
 
             using (var dataStream = new MemoryStream())
             using (var zipStream = new GZipOutputStream(dataStream))
             {
                 zipStream.SetLevel(9);
-                var rawBytes = Encoding.UTF8.GetBytes(me);
+                var rawBytes = Encoding.UTF8.GetBytes(message);
 
                 zipStream.Write(rawBytes, 0, rawBytes.Length);
 
@@ -29,28 +30,26 @@ namespace Amazon.SQS.ExtendClient.Compression
             }
         }
 
-        public static string Decompress(this byte[] me)
+        public string Decompress(byte[] compressedMessage)
         {
-            if (me == null) return null;
+            if (compressedMessage == null) return null;
 
-            using (var compressedStream = new MemoryStream(me))
+            using (var compressedStream = new MemoryStream(compressedMessage))
             {
                 compressedStream.Position = 0;
                 using (var zipStream = new GZipInputStream(compressedStream))
+                using (var dataStream = new MemoryStream())
                 {
-                    using (var dataStream = new MemoryStream())
+                    var buffer = new byte[1024];
+                    int result;
+                    while ((result = zipStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        var buffer = new byte[1024];
-                        int result;
-                        while ((result = zipStream.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            dataStream.Write(buffer, 0, result);
-                        }
-
-                        zipStream.Close();
-
-                        return Encoding.UTF8.GetString(dataStream.ToArray());
+                        dataStream.Write(buffer, 0, result);
                     }
+
+                    zipStream.Close();
+
+                    return Encoding.UTF8.GetString(dataStream.ToArray());
                 }
             }
         }
