@@ -1,12 +1,22 @@
-﻿using System.IO;
+﻿using ICSharpCode.SharpZipLib.GZip;
+using System.IO;
 using System.Text;
-using ICSharpCode.SharpZipLib.GZip;
 
 namespace Amazon.SQS.ExtendClient.Compression
 {
     /// <inheritdoc cref="ICompressionProvider"/>
     public class CompressionProvider : ICompressionProvider
     {
+        public CompressionProvider()
+            : this(CompressionLevel.High) { }
+
+        public CompressionProvider(CompressionLevel compressionLevel)
+        {
+            CompressionLevel = compressionLevel;
+        }
+
+        public CompressionLevel CompressionLevel { get; }
+
         public byte[] Compress(string message)
         {
             if (message == null) return null;
@@ -14,7 +24,7 @@ namespace Amazon.SQS.ExtendClient.Compression
             using (var dataStream = new MemoryStream())
             using (var zipStream = new GZipOutputStream(dataStream))
             {
-                zipStream.SetLevel(9);
+                zipStream.SetLevel((int)CompressionLevel);
                 var rawBytes = Encoding.UTF8.GetBytes(message);
 
                 zipStream.Write(rawBytes, 0, rawBytes.Length);
