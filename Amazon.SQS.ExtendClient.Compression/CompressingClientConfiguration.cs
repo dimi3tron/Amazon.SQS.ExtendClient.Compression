@@ -7,7 +7,7 @@
             this.CompressionProvider = new CompressionProvider();
             this.CompressionSizeThreshold = 262144;
             this.AlwaysCompress = true;
-            this.MessageParser = new AlwaysCompressedMessageParser();
+            this.MessageParser = new ImplicitCompressionMessageParser();
         }
 
         public CompressingClientConfiguration(CompressingClientConfiguration other)
@@ -48,7 +48,7 @@
             // ReSharper disable once AssignmentInConditionalExpression; intentional assignment
             if ((this.AlwaysCompress = alwaysCompress))
             {
-                this.MessageParser = new AlwaysCompressedMessageParser();
+                this.MessageParser = new ImplicitCompressionMessageParser();
             }
             else
             {
