@@ -35,7 +35,7 @@
 
             return ImplicitCompression ?
                 Value :
-                $"{(this.IsCompressed ? 1 : 0)}|{Value}";
+                $"{(this.IsCompressed ? "1" : "0")}|{Value}";
         }
     }
 }
