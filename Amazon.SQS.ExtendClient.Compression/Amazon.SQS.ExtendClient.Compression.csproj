@@ -7,7 +7,7 @@
     <StartupObject />
     <Authors>Dimitri Troncquo</Authors>
     <Description>Add message compression to Amazon SQS Extended Client</Description>
-    <PackageLicenseFile>LICENSE-apacheV2.txt</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <Version>1.0.0-beta1</Version>
