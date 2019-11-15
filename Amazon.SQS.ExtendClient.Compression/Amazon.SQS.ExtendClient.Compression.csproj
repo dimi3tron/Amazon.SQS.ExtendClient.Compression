@@ -10,7 +10,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
 <AssemblyVersion>1.1.0</AssemblyVersion>
     <FileVersion>1.1.0</FileVersion>
-    <Version>1.1.0-alpha1</Version>
+    <Version>1.1.0-alpha2</Version>
     <PackageProjectUrl>https://github.com/dimi3tron/Amazon.SQS.ExtendClient.Compression</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dimi3tron/Amazon.SQS.ExtendClient.Compression</RepositoryUrl>
     <PackageTags>aws sqs compression queue gzip amazon</PackageTags>
@@ -18,9 +18,13 @@
     <PackageId>AWSSQS.ExtendClient.Compression</PackageId>
     <Title>AWS SQS Extended Client with Compression</Title>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageReleaseNotes>- added compression level option
+    <PackageReleaseNotes>- signed the assembly
+- added compression level option
+
 - added always compress option
 - added message size threshold option</PackageReleaseNotes>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
