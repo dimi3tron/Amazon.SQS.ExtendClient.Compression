@@ -56,9 +56,7 @@ namespace Amazon.SQS.ExtendClient.Compression
 
             return new MessageBody(
                 compress,
-                compress ?
-                    Compress(value) :
-                    value
+                compress ? Compress(value) : value
             ).ToString();
         }
 
@@ -66,12 +64,10 @@ namespace Amazon.SQS.ExtendClient.Compression
         {
             if (TryParseResponseBody(value, out var body))
             {
-                return body.IsCompressed ?
-                    Decompress(body.Value) :
-                    body.Value;
-            }
+                return body.IsCompressed ? Decompress(body.Value) : body.Value;
+            } 
 
-            return value;
+            throw new FormatException("The message body was not in the expected format and could not be decompressed.");
         }
     }
 }
