@@ -7,15 +7,19 @@
     <StartupObject />
     <Authors>Dimitri Troncquo</Authors>
     <Description>Add message compression to Amazon SQS Extended Client</Description>
-    <PackageLicenseFile>LICENSE-apacheV2.txt</PackageLicenseFile>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.0</FileVersion>
-    <Version>1.0.0-beta1</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
+    <FileVersion>1.1.0</FileVersion>
+    <Version>1.1.0-alpha1</Version>
     <PackageProjectUrl>https://github.com/dimi3tron/Amazon.SQS.ExtendClient.Compression</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dimi3tron/Amazon.SQS.ExtendClient.Compression</RepositoryUrl>
     <PackageTags>aws sqs compression queue gzip amazon</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>AWSSQS.ExtendClient.Compression</PackageId>
+    <Title>AWS SQS Extended Client with Compression</Title>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/dimi3tron/Amazon.SQS.ExtendClient.Compression/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>- added always compress option
+- added message size threshold option</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE-apacheV2.txt">
+    <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
