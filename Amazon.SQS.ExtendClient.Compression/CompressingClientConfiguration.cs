@@ -7,7 +7,7 @@
             this.CompressionProvider = new CompressionProvider();
             this.CompressionSizeThreshold = 262144;
             this.AlwaysCompress = false;
-            this.MessageParser = new ImplicitCompressionMessageParser();
+            this.MessageParser = new DefaultMessageParser();
         }
 
         public CompressingClientConfiguration(CompressingClientConfiguration other)
