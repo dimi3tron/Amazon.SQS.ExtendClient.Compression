@@ -5,6 +5,7 @@ using Amazon.SQS.ExtendClient.Compression.Test.Extensions;
 
 namespace Amazon.SQS.ExtendClient.Compression.Test
 {
+    [TestFixture]
     public class CompressionProviderTests
     {
         [Test]

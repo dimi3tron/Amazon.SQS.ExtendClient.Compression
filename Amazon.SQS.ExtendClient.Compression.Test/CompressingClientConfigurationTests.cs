@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace Amazon.SQS.ExtendClient.Compression.Test
 {
+    [TestFixture]
     public class CompressingClientConfigurationTests
     {
         [Test]
