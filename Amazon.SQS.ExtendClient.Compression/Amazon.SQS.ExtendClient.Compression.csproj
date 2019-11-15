@@ -8,7 +8,7 @@
     <Authors>Dimitri Troncquo</Authors>
     <Description>Add message compression to Amazon SQS Extended Client</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
+<AssemblyVersion>1.1.0</AssemblyVersion>
     <FileVersion>1.1.0</FileVersion>
     <Version>1.1.0-alpha1</Version>
     <PackageProjectUrl>https://github.com/dimi3tron/Amazon.SQS.ExtendClient.Compression</PackageProjectUrl>
