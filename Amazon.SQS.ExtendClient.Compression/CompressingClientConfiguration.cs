@@ -6,7 +6,7 @@
         {
             this.CompressionProvider = new CompressionProvider();
             this.CompressionSizeThreshold = 262144;
-            this.AlwaysCompress = true;
+            this.AlwaysCompress = false;
             this.MessageParser = new ImplicitCompressionMessageParser();
         }
 
