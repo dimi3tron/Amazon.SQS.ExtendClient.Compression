@@ -3,6 +3,6 @@
     public class ImplicitCompressionMessageParser : IMessageParser
     {
         public MessageBody Parse(string value)
-            => new MessageBody(false, value, true);
+            => new MessageBody(true, value, true);
     }
 }
