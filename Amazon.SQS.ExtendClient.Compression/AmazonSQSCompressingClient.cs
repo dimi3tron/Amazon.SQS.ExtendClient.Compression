@@ -8,24 +8,27 @@ namespace Amazon.SQS.ExtendClient.Compression
 {
     public class AmazonSQSCompressingClient : AmazonSQSExtendedClientBase
     {
-        private readonly IMessageService messageService;
-        private readonly IAmazonSQS sqsClient;
+        protected readonly IMessageService MessageService;
+        protected readonly IAmazonSQS SQSClient;
 
         public AmazonSQSCompressingClient(IAmazonSQS sqsClient)
             : this(sqsClient, new CompressingClientConfiguration()) { }
 
         public AmazonSQSCompressingClient(IAmazonSQS sqsClient, ICompressingClientConfiguration configuration)
+            : this(sqsClient, new MessageService(configuration)) { }
+
+        protected AmazonSQSCompressingClient(IAmazonSQS sqsClient, IMessageService messageService)
             : base(sqsClient)
         {
-            this.sqsClient = sqsClient;
-            this.messageService = new MessageService(configuration);
+            this.SQSClient = sqsClient;
+            this.MessageService = messageService;
         }
 
         public override Task<SendMessageResponse> SendMessageAsync(SendMessageRequest sendMessageRequest, CancellationToken cancellationToken = default(CancellationToken))
         {
-            sendMessageRequest.MessageBody = this.messageService.ToRequestBody(sendMessageRequest.MessageBody);
+            sendMessageRequest.MessageBody = this.MessageService.ToRequestBody(sendMessageRequest.MessageBody);
 
-            return sqsClient.SendMessageAsync(sendMessageRequest, cancellationToken);
+            return SQSClient.SendMessageAsync(sendMessageRequest, cancellationToken);
         }
 
         public override Task<SendMessageResponse> SendMessageAsync(string queueUrl, string messageBody, CancellationToken cancellationToken = default(CancellationToken))
@@ -37,10 +40,10 @@ namespace Amazon.SQS.ExtendClient.Compression
         {
             foreach (var entry in sendMessageBatchRequest.Entries)
             {
-                entry.MessageBody = this.messageService.ToRequestBody(entry.MessageBody);
+                entry.MessageBody = this.MessageService.ToRequestBody(entry.MessageBody);
             }
 
-            return sqsClient.SendMessageBatchAsync(sendMessageBatchRequest, cancellationToken);
+            return SQSClient.SendMessageBatchAsync(sendMessageBatchRequest, cancellationToken);
         }
 
         public override Task<SendMessageBatchResponse> SendMessageBatchAsync(string queueUrl, List<SendMessageBatchRequestEntry> entries, CancellationToken cancellationToken = default(CancellationToken))
@@ -50,10 +53,10 @@ namespace Amazon.SQS.ExtendClient.Compression
 
         public override async Task<ReceiveMessageResponse> ReceiveMessageAsync(ReceiveMessageRequest receiveMessageRequest, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var result = await sqsClient.ReceiveMessageAsync(receiveMessageRequest, cancellationToken).ConfigureAwait(false);
+            var result = await SQSClient.ReceiveMessageAsync(receiveMessageRequest, cancellationToken).ConfigureAwait(false);
             foreach (var message in result.Messages)
             {
-                message.Body = this.messageService.ToResponseBody(message.Body);
+                message.Body = this.MessageService.ToResponseBody(message.Body);
             }
 
             return result;
