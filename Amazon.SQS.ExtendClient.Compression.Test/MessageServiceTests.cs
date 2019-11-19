@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using Amazon.SQS.ExtendClient.Compression.Test.Extensions;
 using Gibberish;
 using ICSharpCode.SharpZipLib.GZip;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Text;
 
 namespace Amazon.SQS.ExtendClient.Compression.Test
 {
@@ -16,7 +16,7 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
         {
             var configMock = new Mock<ICompressingClientConfiguration>();
             var compressionProviderMock = new Mock<ICompressionProvider>();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var subject = new MessageService(configMock.Object);
             configMock
                 .SetupGet(x => x.CompressionProvider)
@@ -39,7 +39,7 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
         {
             var configMock = new Mock<ICompressingClientConfiguration>();
             var compressionProviderMock = new Mock<ICompressionProvider>();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var compressedValue = Encoding.UTF8.GetBytes("compressed");
             var subject = new MessageService(configMock.Object);
             configMock
@@ -62,7 +62,7 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
         {
             var configMock = new Mock<ICompressingClientConfiguration>();
             var compressionProviderMock = new Mock<ICompressionProvider>();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var subject = new MessageService(configMock.Object);
             configMock
                 .SetupGet(x => x.CompressionProvider)
@@ -86,7 +86,7 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
         {
             var configMock = new Mock<ICompressingClientConfiguration>();
             var compressionProviderMock = new Mock<ICompressionProvider>();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var subject = new MessageService(configMock.Object);
             configMock
                 .SetupGet(x => x.CompressionProvider)
@@ -105,7 +105,7 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
         {
             var configMock = new Mock<ICompressingClientConfiguration>();
             var compressionProviderMock = new Mock<ICompressionProvider>();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var subject = new MessageService(configMock.Object);
             configMock
                 .SetupGet(x => x.CompressionProvider)
@@ -129,7 +129,7 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
         {
             var configMock = new Mock<ICompressingClientConfiguration>();
             var compressionProviderMock = new Mock<ICompressionProvider>();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var compressedValue = Encoding.UTF8.GetBytes("compressed");
             var subject = new MessageService(configMock.Object);
             configMock
@@ -178,20 +178,20 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
         public void ToResponseBody_WithAlwaysCompressAndAnyCompressedValueAsBase64_ReturnsDecompressedValue()
         {
             var config = new CompressingClientConfiguration().WithAlwaysCompress(true);
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var compressedValue = Convert.ToBase64String(new CompressionProvider().Compress(value));
             var subject = new MessageService(config);
 
             var result = subject.ToResponseBody(compressedValue);
-            
+
             Assert.AreEqual(value, result);
         }
-        
+
         [Test]
         public void ToResponseBody_WithAlwaysCompressAndInvalidValue_ThrowsFormatException()
         {
             var config = new CompressingClientConfiguration().WithAlwaysCompress(true);
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var subject = new MessageService(config);
 
             Assert.Throws<FormatException>(() =>
@@ -199,12 +199,12 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
                 var result = subject.ToResponseBody(value);
             });
         }
-        
+
         [Test]
         public void ToResponseBody_WithAlwaysCompressAndAnyCompressedValueAsBase64AndCompressionMarker_ThrowsFormatException()
         {
             var config = new CompressingClientConfiguration().WithAlwaysCompress(true);
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var compressedValue = Convert.ToBase64String(new CompressionProvider().Compress(value));
             var subject = new MessageService(config);
 
@@ -236,7 +236,7 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
                     Times.Never
                 );
         }
-        
+
         [Test]
         public void ToResponseBody_AnyCompressedValueAsBase64AndCompressionMarkerOne_CallsDecompressWithValueOnce()
         {
@@ -260,12 +260,12 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
                     Times.Once
                 );
         }
-        
+
         [Test]
         public void ToResponseBody_AnyCompressedValueAsBase64WithoutCompressionMarker_ThrowsFormatException()
         {
             var config = new CompressingClientConfiguration();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var compressedValue = Convert.ToBase64String(new CompressionProvider().Compress(value));
             var subject = new MessageService(config);
 
@@ -274,81 +274,105 @@ namespace Amazon.SQS.ExtendClient.Compression.Test
                 var result = subject.ToResponseBody(compressedValue);
             });
         }
-        
+
         [Test]
         public void ToResponseBody_AnyCompressedValueAsBase64WithCompressionMarkerOne_ReturnsDecompressedValue()
         {
             var config = new CompressingClientConfiguration();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var compressedValue = Convert.ToBase64String(new CompressionProvider().Compress(value));
             var subject = new MessageService(config);
 
             var result = subject.ToResponseBody($"1|{compressedValue}");
-            
+
             Assert.AreEqual(value, result);
         }
-        
+
         [Test]
         public void ToResponseBody_AnyValueWithCompressionMarkerOne_ThrowsFormatException()
         {
             var config = new CompressingClientConfiguration();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var subject = new MessageService(config);
-            
+
             Assert.Throws<FormatException>(() =>
             {
                 var result = subject.ToResponseBody($"1|{value}");
             });
         }
-        
+
         [Test]
         public void ToResponseBody_EmptyValue_ThrowsFormatException()
         {
             var config = new CompressingClientConfiguration();
             var value = string.Empty;
             var subject = new MessageService(config);
-            
+
             Assert.Throws<FormatException>(() =>
             {
                 var result = subject.ToResponseBody(value);
             });
         }
-        
+
         [Test]
         public void ToResponseBody_NullValue_ThrowsFormatException()
         {
             var config = new CompressingClientConfiguration();
             var value = null as string;
             var subject = new MessageService(config);
-            
+
             Assert.Throws<FormatException>(() =>
             {
                 var result = subject.ToResponseBody(value);
             });
         }
-        
+
         [Test]
         public void ToResponseBody_AnyValueAsBase4WithCompressionMarkerOne_ThrowsGZipException()
         {
             var config = new CompressingClientConfiguration();
-            var value = Convert.ToBase64String(Encoding.UTF8.GetBytes(new Sentence())); 
+            var value = Convert.ToBase64String(Encoding.UTF8.GetBytes(new Sentence()));
             var subject = new MessageService(config);
-            
+
             Assert.Throws<GZipException>(() =>
             {
                 var result = subject.ToResponseBody($"1|{value}");
             });
         }
-        
+
         [Test]
         public void ToResponseBody_AnyValueWithCompressionMarkerZero_ReturnsValue()
         {
             var config = new CompressingClientConfiguration();
-            var value = (string) new Sentence();
+            var value = (string)new Sentence();
             var subject = new MessageService(config);
 
             var result = subject.ToResponseBody($"0|{value}");
-            
+
+            Assert.AreEqual(value, result);
+        }
+
+        [Test]
+        public void ToResponseBody_MultilineValueWithCompressionMarkerZero_ReturnsValue()
+        {
+            var config = new CompressingClientConfiguration();
+            var value = $"{new Sentence()}\r\n{new Sentence()}";
+            var subject = new MessageService(config);
+
+            var result = subject.ToResponseBody($"0|{value}");
+
+            Assert.AreEqual(value, result);
+        }
+
+        [Test]
+        public void ToResponseBody_JsonValueWithCompressionMarkerZero_ReturnsValue()
+        {
+            var config = new CompressingClientConfiguration();
+            var value = (new { Id = Guid.NewGuid(), Value = new Sentence() }).ToJson();
+            var subject = new MessageService(config);
+
+            var result = subject.ToResponseBody($"0|{value}");
+
             Assert.AreEqual(value, result);
         }
     }
