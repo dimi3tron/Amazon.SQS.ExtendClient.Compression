@@ -5,7 +5,7 @@ namespace Amazon.SQS.ExtendClient.Compression
 {
     public class DefaultMessageParser : IMessageParser
     {
-        private static readonly Regex CompressionMarkerPattern = new Regex(@"^(?<is_compressed>0|1)\|(?<message>.*)$", RegexOptions.Compiled);
+        private static readonly Regex CompressionMarkerPattern = new Regex(@"^(?<is_compressed>0|1)\|(?<message>.*)$", RegexOptions.Compiled | RegexOptions.Singleline);
 
         public MessageBody Parse(string input)
         {
