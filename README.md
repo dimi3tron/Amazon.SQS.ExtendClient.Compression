@@ -4,10 +4,12 @@ Add message compression to Amazon SQS Extended Client
 This library is extension to [Amazon Extended Client Library for .NET](https://github.com/raol/amazon-sqs-net-extended-client-lib). 
 It automatically compresses and decompresses any message sent or retrieved through the client.
 
+Currently the library uses the fork found at: https://github.com/dimi3tron/amazon-sqs-net-extended-client-lib
+
 ## Installation
 
 ```PowerShell
-Install-Package AWSSQS.ExtendClient.Compression -Version 1.1.0-aplha1
+Install-Package AWSSQS.ExtendClient.Compression
 ```
 
 ## Usage
